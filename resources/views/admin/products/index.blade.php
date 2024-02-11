@@ -3,4 +3,5 @@
 @section('title', 'Produtos')
 
 @section('content')
+    <livewire:admin.admin-product-index />
 @endsection
