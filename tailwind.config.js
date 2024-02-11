@@ -10,7 +10,11 @@ export default {
     './resources/js/**/*.js'
 ],
   theme: {
-    extend: {},
+    extend: {
+        fontFamily: {
+            'quick-sand': ['Quicksand', 'sans-serif']
+        }
+    },
   },
   plugins: [daisyui],
 }
