@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Admin\Products;
 
 use Illuminate\View\View;
 use Livewire\Component;
@@ -24,6 +24,6 @@ class AdminProductIndex extends Component
 
     public function render(): View
     {
-        return view('livewire.admin.admin-product-index');
+        return view('livewire.admin.products.admin-product-index');
     }
 }
