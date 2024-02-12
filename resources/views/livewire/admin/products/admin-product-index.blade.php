@@ -3,6 +3,7 @@
         <div class="flex justify-end">
             <button class="btn btn-sm btn-outline mr-8" wire:click="showProductsTable">voltar</button>
         </div>
+        <livewire:admin.admin-create-product />
     @endif
     @if ($showProducts)
         <div class="flex justify-end">
