@@ -1,6 +1,8 @@
 <div class="navbar bg-base-100 p-4 h-24">
     <div class="navbar-start">
-        <h1 class="text-3xl font-light tracking-[0.3rem]">wire:cotton</h1>
+        <a href="{{ route('admin.index') }}">
+            <h1 class="text-3xl font-light tracking-[0.3rem]">wire:cotton</h1>
+        </a>
     </div>
     <div class="navbar-center gap-6">
         <div class="dropdown dropdown-hover h-12 mt-6 flex justify-center">
