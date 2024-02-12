@@ -4,6 +4,6 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(static function () {
-    Route::get('', [AdminController::class, 'index']);
+    Route::get('', [AdminController::class, 'index'])->name('admin.index');
     require __DIR__ . '/admin/products.php';
 });
