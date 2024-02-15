@@ -14,7 +14,7 @@
             </ul> --}}
         </div>
         <div class="dropdown dropdown-hover h-12 mt-6 flex justify-center">
-            <a tabindex="0" class="text-lg tracking-[0.2rem] hover:font-semibold cursor-pointer">categorias</a>
+            <a href="{{ route('admin.categories.index') }}" tabindex="0" class="text-lg tracking-[0.2rem] hover:font-semibold cursor-pointer">categorias</a>
             {{-- <ul tabindex="0" class="dropdown-content z-[1] p-3 shadow bg-base-100 rounded-box w-52 mt-9">
                 <li class="flex flex-col">
                     <a href="" class="btn btn-sm btn-ghost">ver categorias</a>
@@ -22,7 +22,7 @@
             </ul> --}}
         </div>
         <div class="dropdown dropdown-hover h-12 mt-6 flex justify-center">
-            <a tabindex="0" class="text-lg tracking-[0.2rem] hover:font-semibold cursor-pointer">subcategorias</a>
+            <a href="{{ route('admin.subcategories.index') }}" tabindex="0" class="text-lg tracking-[0.2rem] hover:font-semibold cursor-pointer">subcategorias</a>
             {{-- <ul tabindex="0" class="dropdown-content z-[1] p-3 shadow bg-base-100 rounded-box w-52 mt-9">
                 <li class="flex flex-col">
                     <a href="" class="btn btn-sm btn-ghost">ver subcategorias</a>
