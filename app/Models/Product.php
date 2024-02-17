@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['category_id', 'subcategory_id', 'price', 'name', 'description', 'slug', 'on_sale', 'discount'];
+    protected $fillable = ['category_id', 'subcategory_id', 'price', 'name', 'description', 'slug', 'on_sale', 'discount', 'quantitity', 'in_stock'];
 
     public function category(): BelongsTo
     {

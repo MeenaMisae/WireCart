@@ -17,10 +17,12 @@ return new class extends Migration
             $table->unsignedSmallInteger('subcategory_id');
             $table->unsignedDecimal('price', 9, 2);
             $table->string('name', 50);
-            $table->text('description')->nullable();
+            $table->text('description', 200)->nullable();
             $table->string('slug', 50);
             $table->boolean('on_sale')->default(false);
             $table->decimal('discount', 5, 2)->nullable();
+            $table->unsignedSmallInteger('quantity');
+            $table->boolean('in_stock')->default(false);
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('RESTRICT');
