@@ -3,7 +3,9 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Subcategory;
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Attributes\Validate;
@@ -14,9 +16,12 @@ class AdminCreateProduct extends Component
     public int $productDiscount = 0;
     public bool $onSale = false;
     public $productFinalPrice;
+    #[Validate('required|numeric', as: 'preço')]
     public $productPrice;
     #[Validate('required|string|min:3', as: 'produto')]
     public $productName;
+    #[Validate('nullable|string|min:3|max:200', as: 'descrição')]
+    public $productDescription;
     #[Validate('required|exists:categories,id', as: 'categoria')]
     public $categoryID = 0;
     #[Validate('required|exists:subcategories,id', as: 'subcategoria')]
@@ -28,8 +33,10 @@ class AdminCreateProduct extends Component
     {
         return [
             'subcategoryID.exists' => 'subcategoria inválida',
+            'categoryID.exists' => 'categoria inválida'
         ];
     }
+
     public function mount(): void
     {
         $this->categories = Category::all();
@@ -51,6 +58,21 @@ class AdminCreateProduct extends Component
     public function createProduct(): void
     {
         $this->validate();
+        if ($this->productFinalPrice):
+            Product::create([
+                'category_id' => $this->categoryID,
+                'subcategory_id' => $this->subcategoryID,
+                'price' => $this->productFinalPrice,
+                'name' => $this->productName,
+                'description' => $this->productDescription,
+                'slug' => Str::slug($this->productName),
+                'quantitiy' => '',
+
+                'on_sale' => true,
+                'discount' => $this->productDiscount / 100
+            ]);
+            $this->reset('productName', 'productDescription', 'categoryID', 'subcategoryID', 'productPrice', 'onSale');
+        endif;
     }
 
     public function render(): View
