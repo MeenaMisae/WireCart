@@ -47,7 +47,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span class="badge badge-ghost badge-sm">{{ $subcategory->products ? count($subcategory->products) : '0' }}</span>
+                                    <span class="badge badge-ghost badge-sm">{{ count($subcategory->products) }}</span>
                                 </td>
                                 <td>
                                     <span
