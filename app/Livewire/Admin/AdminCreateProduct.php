@@ -7,17 +7,24 @@ use App\Models\Product;
 use App\Models\Subcategory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class AdminCreateProduct extends Component
 {
+    use WithFileUploads;
     public int $productDiscount = 0;
     public bool $onSale = false;
+    #[Validate('required|image', as: 'imagem do produto')]
+    public $productImage;
     public $productFinalPrice;
     #[Validate('required|numeric', as: 'preço')]
     public $productPrice;
+    #[Validate('required|integer', as: 'quantidade')]
+    public $productQuantity;
     #[Validate('required|string|min:3', as: 'produto')]
     public $productName;
     #[Validate('nullable|string|min:3|max:200', as: 'descrição')]
@@ -32,8 +39,8 @@ class AdminCreateProduct extends Component
     public function messages(): array
     {
         return [
-            'subcategoryID.exists' => 'subcategoria inválida',
-            'categoryID.exists' => 'categoria inválida'
+            'subcategoryID.exists' => 'subcategoria inválida.',
+            'categoryID.exists' => 'categoria inválida.'
         ];
     }
 
