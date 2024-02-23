@@ -15,19 +15,7 @@
     <div class="drawer">
         <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content flex flex-col">
-            <div class="w-full navbar">
-                @include('components.admin.hamburguer-menu')
-                <div class="px-2 mx-2 lg:hidden w-full flex justify-center">
-                    <a href="{{ route('admin.index') }}">
-                        <h1 class="text-3xl font-light tracking-[0.3rem]">wire:cotton</h1>
-                    </a>
-                </div>
-                <div class="flex-none hidden lg:block">
-                    <ul class="menu menu-horizontal w-[99vw]">
-                        @include('components.admin.navbar')
-                    </ul>
-                </div>
-            </div>
+            <livewire:admin.components.navbar />
             @yield('content')
         </div>
         @include('components.admin.drawer-side')
@@ -37,3 +25,8 @@
 </body>
 
 </html>
+{{-- <div class="px-2 mx-2 lg:hidden w-full flex justify-center">
+                        <a href="{{ route('admin.index') }}">
+                            <h1 class="text-3xl font-light tracking-[0.3rem]">wire:cotton</h1>
+                        </a>
+                    </div> --}}
