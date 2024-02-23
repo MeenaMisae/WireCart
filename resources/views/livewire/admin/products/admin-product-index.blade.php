@@ -1,7 +1,7 @@
 <div>
     @if ($showAddProductForm)
-        <div class="flex justify-end">
-            <button class="btn btn-sm btn-outline mr-8" wire:click="showProductsTable">voltar</button>
+        <div class="flex justify-end relative">
+            <button class="btn btn-sm btn-outline absolute top-5 right-5" wire:click="showProductsTable">voltar</button>
         </div>
         <livewire:admin.admin-create-product />
     @endif
