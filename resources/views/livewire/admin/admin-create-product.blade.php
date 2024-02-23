@@ -1,21 +1,80 @@
-<div class="flex justify-center h-full gap-8 lg:h-[70vh] px-10">
-    <div class="bg-base-200 rounded-lg shadow p-8 mt-7 lg:mt-0">
-        <div class="grid grid-cols-8 grid-rows-4 max-h-full">
-            <div class="col-start-1 col-span-3 row-span-2 avatar flex justify-center">
-                <div class="h-[20rem] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                    <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+<div>
+    <div class="lg:flex justify-center items-center hidden lg:p-5">
+        <h1 class="text-3xl font-light tracking-[0.2rem]">adicionar novo produto</h1>
+    </div>
+    <div class="flex flex-col justify-center items-center">
+        <ul class="timeline">
+            <li>
+                <div class="timeline-start timeline-box">Criação</div>
+                <div class="timeline-middle">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <hr />
+            </li>
+            <li>
+                <hr />
+                <div class="timeline-start timeline-box">Fotos</div>
+                <div class="timeline-middle">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <hr />
+            </li>
+            <li>
+                <hr />
+                <div class="timeline-start timeline-box">Revisão</div>
+                <div class="timeline-middle">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+            </li>
+        </ul>
+        <div class="bg-base-200 rounded-lg shadow h-full w-8/12 px-10 py-3">
+            <div class="grid grid-cols-12 grid-rows-4 h-full w-full gap-4">
+                <div class="col-start-1 col-span-4 flex flex-col justify-center items-center">
+                    <label for="" class="label">nome do produto:</label>
+                    <input wire:model.live="productName" type="text" class="input input-bordered w-full">
+                </div>
+                <div class="col-start-1 col-span-4 flex justify-center">
+                    @error('productName')
+                        <span class="text-error lowercase">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-start-5 col-span-3 row-start-1 flex flex-col justify-center items-center">
+                    <label for="categoryID" class="label">categoria:</label>
+                    <select wire:model.live="categoryID" wire:change="loadSubcategories" name="categoryID"
+                        id="categoryID" class="select select-bordered w-full">
+                        <option value="0" selected disabled>selecione a categoria</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-start-4 col-span-2">
+                    @error('categoryID')
+                        <span class="text-error lowercase">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
-            <div class="col-start-2 row-start-4 flex justify-center mt-3 w-full">
-                <input type="file" name="" id="uploadProductImage" hidden />
-                <label for="uploadProductImage" class="btn btn-sm btn-outline">
-                    <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1h-2M8 9l4-5 4 5m1 8h0"/>
-                      </svg>
-                    carregar foto
-                </label>
-            </div>
-            <div class="col-start-4 col-span-2">
+        </div>
+        <div class="flex justify-center mt-6">
+            <button class="btn btn-outline btn-sm" wire:click="createProduct">salvar</button>
+        </div>
+    </div>
+</div>
+{{-- <div class="bg-base-200 rounded-lg shadow p-8 mt-7 lg:mt-0">
+        <div class="grid grid-cols-8 grid-rows-4 max-h-full">
+            <div class="col-start-1 col-span-2">
                 <div class="max-w-96">
                     <div class="flex flex-col justify-center items-center">
                         <label for="" class="label">nome do produto:</label>
@@ -63,8 +122,6 @@
                                 @error('subcategoryID')
                                     <span class="text-error lowercase">{{ $message }}</span>
                                 @enderror
-                            </div>
-                        </div>
                     @endif
                 @endisset
             </div>
@@ -135,14 +192,11 @@
                             @endfor
                         </div>
                     </div>
-
-                @endif
-                <div class="flex justify-center mt-6">
-                    <button class="btn btn-outline btn-sm" wire:click="createProduct">salvar</button>
+                    @endif
+                    <div class="flex justify-center mt-6">
+                        <button class="btn btn-outline btn-sm" wire:click="createProduct">salvar</button>
+                    </div>
                 </div>
             </div>
-
-        </div>
-
-
-    </div>
+        </div> --}}
+</div>
