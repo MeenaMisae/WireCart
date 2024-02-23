@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name', 50);
             $table->text('description', 200)->nullable();
             $table->string('slug', 50);
+            $table->string('image', 50)->nullable()->default(null);
             $table->boolean('on_sale')->default(false);
             $table->decimal('discount', 5, 2)->nullable();
             $table->unsignedSmallInteger('quantity');
