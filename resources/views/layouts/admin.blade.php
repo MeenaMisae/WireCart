@@ -14,13 +14,19 @@
 <body>
     <div class="drawer">
         <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content flex flex-col">
-            <livewire:admin.components.navbar />
+        <div class="drawer-content flex flex-col" x-data="{ showNavbar: true }">
+            <div class="w-full navbar" x-show="showNavbar" x-transition.duration.200ms>
+                @include('components.admin.hamburguer-menu')
+                <div class="flex-none hidden lg:block menu-container">
+                    <ul class="menu menu-horizontal w-[99vw]">
+                        @include('components.admin.navbar')
+                    </ul>
+                </div>
+            </div>
             @yield('content')
         </div>
         @include('components.admin.drawer-side')
     </div>
-
     @yield('js')
 </body>
 
