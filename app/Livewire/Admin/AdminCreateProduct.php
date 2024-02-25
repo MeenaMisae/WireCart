@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Livewire\Admin\Products\AdminProductIndex;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Subcategory;
@@ -15,15 +16,15 @@ use Livewire\WithFileUploads;
 
 class AdminCreateProduct extends Component
 {
-    use WithFileUploads;
+    // use WithFileUploads;
     public int $productDiscount = 0;
     public bool $onSale = false;
-    #[Validate('required|image', as: 'imagem do produto')]
-    public $productImage;
+    // #[Validate('required|image', as: 'imagem do produto')]
+    // public $productImage;
     public $productFinalPrice;
-    #[Validate('required|numeric', as: 'preço')]
+    #[Validate('required|numeric|gt:0', as: 'preço')]
     public $productPrice;
-    #[Validate('required|integer', as: 'quantidade')]
+    #[Validate('required|integer|min:1', as: 'quantidade', message: ['productQuantity.required' => 'campo obrigatório'])]
     public $productQuantity;
     #[Validate('required|string|min:3', as: 'produto')]
     public $productName;
@@ -65,21 +66,20 @@ class AdminCreateProduct extends Component
     public function createProduct(): void
     {
         $this->validate();
-        if ($this->productFinalPrice):
-            Product::create([
-                'category_id' => $this->categoryID,
-                'subcategory_id' => $this->subcategoryID,
-                'price' => $this->productFinalPrice,
-                'name' => $this->productName,
-                'description' => $this->productDescription,
-                'slug' => Str::slug($this->productName),
-                'quantitiy' => '',
-
-                'on_sale' => true,
-                'discount' => $this->productDiscount / 100
-            ]);
-            $this->reset('productName', 'productDescription', 'categoryID', 'subcategoryID', 'productPrice', 'onSale');
-        endif;
+        Product::create([
+            'category_id' => $this->categoryID,
+            'subcategory_id' => $this->subcategoryID,
+            'price' => $this->productFinalPrice ?? $this->productPrice,
+            'name' => $this->productName,
+            'description' => $this->productDescription,
+            'slug' => Str::slug($this->productName),
+            'quantity' => $this->productQuantity,
+            'on_sale' => $this->onSale,
+            'in_stock' => $this->productQuantity > 1 ? true : false,
+            'discount' => $this->onSale ? $this->productDiscount / 100 : 0,
+        ]);
+        $this->reset('productName', 'productDescription', 'categoryID', 'subcategoryID', 'productPrice', 'onSale');
+        // $this->dispatch('new_product')->to(AdminProductIndex::class);
     }
 
     public function render(): View
