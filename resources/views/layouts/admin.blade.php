@@ -14,7 +14,7 @@
 <body>
     <div class="drawer">
         <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content flex flex-col" x-data="{ showNavbar: true }">
+        <div class="drawer-content flex flex-col" x-data="{ showNavbar: false }">
             <div class="w-full navbar" x-show="showNavbar" x-transition.duration.200ms>
                 @include('components.admin.hamburguer-menu')
                 <div class="flex-none hidden lg:block menu-container">
