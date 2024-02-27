@@ -1,4 +1,4 @@
-<div x-data="{ showProductForm: false }">
+<div x-data="{ showProductForm: true }">
     <div>
         <div class="flex justify-end mr-4">
             <button class="btn btn-sm btn-outline" x-show="! showProductForm"
@@ -7,7 +7,7 @@
             </button>
         </div>
         <div x-show="showProductForm" x-transition.duration.200ms>
-            <livewire:admin.admin-create-product />
+            <livewire:admin.products.create.admin-create-product />
         </div>
         <div x-show="! showProductForm" x-transition.duration.500ms>
             @if ($products->count() > 0)
