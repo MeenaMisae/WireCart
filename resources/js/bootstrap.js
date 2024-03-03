@@ -7,6 +7,10 @@
 import axios from 'axios';
 import jquery from 'jquery';
 window.axios = axios;
+import PhotoSwipeLightbox from 'photoswipe/lightbox';
+import PhotoSwipe from 'photoswipe'
+window.PhotoSwipeLightbox = PhotoSwipeLightbox
+window.PhotoSwipe = PhotoSwipe
 window.$ = window.jQuery = jquery;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
