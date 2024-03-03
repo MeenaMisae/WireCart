@@ -8,7 +8,7 @@
                 </svg>
             </button>
         </div>
-        <div class="flex flex-col items-center justify-center w-full max-h-full" x-data="imageComponent"
+        <div class="flex flex-col items-center justify-center w-full max-h-full" x-data="progressComponent"
             x-on:livewire-upload-start="uploading = true" x-on:livewire-upload-finish="uploading = false"
             x-on:livewire-upload-cancel="uploading = false" x-on:livewire-upload-error="uploading = false"
             x-on:livewire-upload-progress="progress = $event.detail.progress">
@@ -29,19 +29,36 @@
                                     </svg>
                                 </button>
                                 <button class="btn btn-ghost btn-circle btn-xs"
-                                    x-on:click="showCropModal('image-{{ $index }}')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                      </svg>
-
+                                    x-on:click="document.getElementById('image-{{ $index }}-input').click()">
+                                    <svg class="w-4 h-4 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1h-2M8 9l4-5 4 5m1 8h0" />
+                                    </svg>
                                 </button>
                             </div>
-                            <img class="h-24 transition-all ease-in-out rounded cursor-pointer hover:scale-105"
-                                id="image-{{ $index }}" src="{{ $value->temporaryUrl() }}" alt=""
-                                x-on:click="$('#image-{{ $index }}-input').click()">
+                            <div x-data="galleryComponent" id="gallery">
+                                <div class="pswp-gallery pswp-gallery--single-column">
+                                    {{-- @php
+                                    for ($i = 0; $i < count($files); $i++) :
+                                        dump($files[$i]->temporaryUrl());
+                                    endfor
+                                    @endphp --}}
+                                    @foreach ($files as $index => $value)
+
+                                        <a href="{{ $value->temporaryUrl() }}" target="_blank" data-pswp-width="500"
+                                            data-pswp-height="700" class="">
+                                            <img class="h-24 transition-all ease-in-out rounded cursor-pointer hover:scale-105"
+                                                id="image-{{ $index }}" src="{{ $value->temporaryUrl() }}"
+                                                alt="">
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
                             <input type="file" id="image-{{ $index }}-input"
                                 wire:model="files.{{ $index }}" hidden accept="image/*">
+
                         </div>
                     @endforeach
                 </div>
@@ -55,18 +72,6 @@
                 <input type="file" name="" id="productImages" wire:model="files" x-on:change="progress = 1"
                     hidden multiple accept="image/*">
             </div>
-            <dialog id="cropModal" class="modal backdrop-blur-sm">
-                <div class="modal-box">
-                    <h3 class="text-lg font-bold">imagem</h3>
-                    <img :src="imageToCrop" alt="">
-                    <div class="modal-action">
-                        <button x-on:click="cropModal.close()">fechar</button>
-                    </div>
-                </div>
-                <form method="dialog" class="modal-backdrop">
-                    <button>close</button>
-                </form>
-            </dialog>
         </div>
         <div class="flex items-center justify-center">
             <button class="ml-6 btn btn-outline btn-sm" x-on:click="currentStep++">
@@ -80,16 +85,25 @@
 </div>
 <script>
     document.addEventListener('alpine:init', () => {
-        Alpine.data('imageComponent', () => ({
+        Alpine.data('progressComponent', () => ({
             uploading: false,
-            progress: 0,
-            imageToCrop: '',
-            cropper: null,
+            progress: 0
+        }))
 
-            showCropModal(id) {
-                cropModal.showModal()
-                this.imageToCrop = document.getElementById(`${id}`).src
+        Alpine.data('galleryComponent', () => ({
+
+            init() {
+                const lightbox = new PhotoSwipeLightbox({
+                    gallery: '#gallery',
+                    children: 'a',
+                    pswpModule: PhotoSwipe,
+                    showHideAnimationType: 'fade',
+                    arrowPrev: true
+                })
+
+                lightbox.init()
             }
         }))
+
     })
 </script>
