@@ -8,12 +8,12 @@
                 </svg>
             </button>
         </div>
-        <div class="flex flex-col items-center justify-center w-full max-h-full" x-data="progressComponent"
+        <div class="flex flex-col items-center justify-center w-full max-h-full" x-data="galleryComponent"
             x-on:livewire-upload-start="uploading = true" x-on:livewire-upload-finish="uploading = false"
             x-on:livewire-upload-cancel="uploading = false" x-on:livewire-upload-error="uploading = false"
             x-on:livewire-upload-progress="progress = $event.detail.progress">
             @isset($files)
-                <div class="grid w-full h-full grid-cols-2 gap-4">
+                <div class="grid w-full h-full grid-cols-2 gap-4" id="gallery">
                     @foreach ($files as $index => $value)
                         <div class="flex items-center w-full p-5 mb-2 rounded-lg shadow bg-base-300 indicator">
                             @if ($index === 0)
@@ -38,22 +38,14 @@
                                     </svg>
                                 </button>
                             </div>
-                            <div x-data="galleryComponent" id="gallery">
+                            <div id="gallery-items">
                                 <div class="pswp-gallery pswp-gallery--single-column">
-                                    {{-- @php
-                                    for ($i = 0; $i < count($files); $i++) :
-                                        dump($files[$i]->temporaryUrl());
-                                    endfor
-                                    @endphp --}}
-                                    @foreach ($files as $index => $value)
-
-                                        <a href="{{ $value->temporaryUrl() }}" target="_blank" data-pswp-width="500"
-                                            data-pswp-height="700" class="">
-                                            <img class="h-24 transition-all ease-in-out rounded cursor-pointer hover:scale-105"
-                                                id="image-{{ $index }}" src="{{ $value->temporaryUrl() }}"
-                                                alt="">
-                                        </a>
-                                    @endforeach
+                                    <a href="{{ $value->temporaryUrl() }}" target="_blank" data-pswp-width="500"
+                                        data-pswp-height="657">
+                                        <img class="h-24 transition-all ease-in-out rounded cursor-pointer hover:scale-105"
+                                            id="image-{{ $index }}" src="{{ $value->temporaryUrl() }}"
+                                            alt="">
+                                    </a>
                                 </div>
                             </div>
                             <input type="file" id="image-{{ $index }}-input"
@@ -85,20 +77,16 @@
 </div>
 <script>
     document.addEventListener('alpine:init', () => {
-        Alpine.data('progressComponent', () => ({
-            uploading: false,
-            progress: 0
-        }))
-
         Alpine.data('galleryComponent', () => ({
+            uploading: false,
+            progress: 0,
 
             init() {
                 const lightbox = new PhotoSwipeLightbox({
                     gallery: '#gallery',
-                    children: 'a',
+                    children: '#gallery-items',
                     pswpModule: PhotoSwipe,
                     showHideAnimationType: 'fade',
-                    arrowPrev: true
                 })
 
                 lightbox.init()
