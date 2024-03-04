@@ -60,7 +60,15 @@
                     <progress max="100" :value="progress" class="w-56 progress progress-accent"></progress>
                 </div>
                 <button class="btn btn-outline w-[30vw]" :disabled="uploading"
-                    x-on:click="$('#productImages').click()">adicionar imagens</button>
+                    x-on:click="$('#productImages').click()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+
+                    adicionar imagens
+                </button>
                 <input type="file" name="" id="productImages" wire:model="files" x-on:change="progress = 1"
                     hidden multiple accept="image/*">
             </div>
