@@ -4,7 +4,6 @@ namespace App\Livewire\Admin\Products\Create\Form;
 
 use Livewire\Component;
 use App\Models\Category;
-use App\Models\Product;
 use App\Models\Subcategory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
@@ -34,8 +33,19 @@ class AdminCreateProductForm extends Component
     {
         return [
             'subcategoryID.exists' => 'subcategoria inválida.',
-            'categoryID.exists' => 'categoria inválida.'
+            'categoryID.exists' => 'categoria inválida.',
+            'productDiscount' => 'desconto inválido'
         ];
+    }
+
+    public function rules(): array
+    {
+        $rules = [];
+        if ($this->onSale) :
+            $rules['productDiscount'] = 'required|integer|gt:0';
+        endif;
+
+        return $rules;
     }
 
     public function mount(): void
@@ -45,10 +55,11 @@ class AdminCreateProductForm extends Component
 
     public function calculateDiscount(): void
     {
-        if (empty($this->productPrice)):
+        if (empty($this->productPrice)) :
             return;
         endif;
-        $this->productFinalPrice = $this->productPrice - $this->productPrice * ($this->productDiscount / 100);
+        $final = $this->productPrice - $this->productPrice * ($this->productDiscount / 100);
+        $this->productFinalPrice = number_format($final, 2, ',', '.');
     }
 
     public function loadSubcategories(): void
@@ -56,22 +67,23 @@ class AdminCreateProductForm extends Component
         $this->subcategories = Subcategory::where('category_id', '=', $this->categoryID)->get();
     }
 
-    public function createProduct(): void
+    public function nextStep(): void
     {
-        $this->validate();
-        Product::create([
+        // $this->validate();
+        $data = [
             'category_id' => $this->categoryID,
             'subcategory_id' => $this->subcategoryID,
-            'price' => $this->productFinalPrice ?? $this->productPrice,
+            'original_price' => (float) $this->productPrice,
+            'final_price' => $this->onSale ? (float) $this->productFinalPrice : (float) $this->productPrice,
             'name' => $this->productName,
             'description' => $this->productDescription,
             'slug' => Str::slug($this->productName),
             'quantity' => $this->productQuantity,
             'on_sale' => $this->onSale,
-            'in_stock' => $this->productQuantity > 1 ? true : false,
+            'in_stock' => $this->productQuantity > 5 ? true : false,
             'discount' => $this->onSale ? $this->productDiscount / 100 : 0,
-        ]);
-        $this->reset('productName', 'productDescription', 'categoryID', 'subcategoryID', 'productPrice', 'onSale');
+        ];
+        $this->dispatch('create_product_form', $data)->to(AdminCreateProductReviewForm::class);
     }
 
     public function render()
