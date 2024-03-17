@@ -20,11 +20,13 @@ class AdminCreateProductReviewForm extends Component
     public $category;
     public $subcategory;
     public array $data;
+    public $productImages;
+    public $inStock;
 
     #[On('create_product_form')]
-    public function receiveData($arr)
+    public function receiveData($data)
     {
-        $this->data = $arr;
+        $this->data = $data;
         $this->productDescription = $this->data['description'];
         $this->onSale = $this->data['on_sale'];
         if ($this->onSale === true) :
@@ -35,8 +37,17 @@ class AdminCreateProductReviewForm extends Component
         $this->category =  Category::find($this->data['category_id'])->name;
         $this->subcategory =  Subcategory::find($this->data['category_id'])->name;
         $this->productName =  $this->data['name'];
-        $this->productQuantity =  $this->data['quantity'];
-        // $this->data['on_sale'] ? $this->productDiscount = $this->data['discount'] : '';
+        $this->inStock = $this->data['in_stock'];
+        if ($this->inStock === false) :
+            $this->productQuantity =  $this->data['quantity'];
+        endif;
+    }
+
+    #[On('product_images')]
+    public function receiveImages($productImages)
+    {
+        $this->productImages = $productImages;
+        $this->dispatch('images_received');
     }
 
     public function render()
