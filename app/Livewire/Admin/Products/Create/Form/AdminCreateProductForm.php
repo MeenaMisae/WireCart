@@ -73,8 +73,8 @@ class AdminCreateProductForm extends Component
         $data = [
             'category_id' => $this->categoryID,
             'subcategory_id' => $this->subcategoryID,
-            'original_price' => (float) $this->productPrice,
-            'final_price' => $this->onSale ? (float) $this->productFinalPrice : (float) $this->productPrice,
+            'original_price' => is_numeric($this->productPrice) ? number_format($this->productPrice, 2, ',', '.') : $this->productPrice,
+            'final_price' => $this->onSale ? $this->productFinalPrice : $this->productPrice,
             'name' => $this->productName,
             'description' => $this->productDescription,
             'slug' => Str::slug($this->productName),
