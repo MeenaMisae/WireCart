@@ -1,4 +1,5 @@
 @import url('/node_modules/photoswipe/dist/photoswipe.css');
+@import url('/node_modules/swiper/swiper-bundle.css');
 
 @tailwind base;
 @tailwind components;
