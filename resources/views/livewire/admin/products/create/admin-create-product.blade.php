@@ -2,7 +2,7 @@
     <div class="items-center justify-center hidden lg:flex lg:p-5">
         <h1 class="text-3xl font-light tracking-[0.2rem]">adicionar novo produto</h1>
     </div>
-        <div class="flex flex-col items-center justify-center" x-data="{ currentStep: 2 }">
+        <div class="flex flex-col items-center justify-center" x-data="{ currentStep: 1 }">
         <ul class="steps steps-horizontal">
             <li :data-content="currentStep > 1 ? '✓' : '1'" class="step step-info">Formulário</li>
             <li :data-content="currentStep > 2 && currentStep <= 3 ? '✓' : '2'" id="imageForm" class="step"
