@@ -8,7 +8,10 @@ import axios from 'axios';
 import jquery from 'jquery';
 window.axios = axios;
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
-import PhotoSwipe from 'photoswipe'
+import PhotoSwipe from 'photoswipe';
+import Swiper from 'swiper/bundle';
+
+window.Swiper = Swiper;
 window.PhotoSwipeLightbox = PhotoSwipeLightbox
 window.PhotoSwipe = PhotoSwipe
 window.$ = window.jQuery = jquery;
