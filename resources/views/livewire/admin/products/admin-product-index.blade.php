@@ -1,4 +1,4 @@
-<div x-data="{ showProductForm: true }">
+<div x-data="{ showProductForm: false }">
     <div>
         <div class="flex justify-end mr-4">
             <button class="btn btn-sm btn-outline" x-show="! showProductForm"
