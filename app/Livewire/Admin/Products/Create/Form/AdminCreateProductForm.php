@@ -14,9 +14,9 @@ class AdminCreateProductForm extends Component
     public int $productDiscount = 0;
     public bool $onSale = false;
     public $productFinalPrice;
-    #[Validate('required|numeric|gt:0', as: 'preço')]
+    #[Validate('required|numeric|gt:0', as: 'preço', message: ['productPrice.required' => 'obrigatório'])]
     public $productPrice;
-    #[Validate('required|integer|min:1', as: 'quantidade', message: ['productQuantity.required' => 'campo obrigatório'])]
+    #[Validate('required|integer|min:1', as: 'quantidade', message: ['productQuantity.required' => 'obrigatório'])]
     public $productQuantity;
     #[Validate('required|string|min:3', as: 'produto')]
     public $productName;
@@ -27,14 +27,15 @@ class AdminCreateProductForm extends Component
     #[Validate('required|exists:subcategories,id', as: 'subcategoria')]
     public $subcategoryID = 0;
     public Collection $categories;
-    public $subcategories;
+    public $subcategories = [];
 
     public function messages(): array
     {
         return [
             'subcategoryID.exists' => 'subcategoria inválida.',
             'categoryID.exists' => 'categoria inválida.',
-            'productDiscount' => 'desconto inválido'
+            'productDiscount' => 'desconto inválido',
+            'productName.min' => 'tamanho mínimo de 3 caracteres'
         ];
     }
 
@@ -65,11 +66,18 @@ class AdminCreateProductForm extends Component
     public function loadSubcategories(): void
     {
         $this->subcategories = Subcategory::where('category_id', '=', $this->categoryID)->get();
+        if (count($this->subcategories)) :
+            $this->subcategoryID = Subcategory::where('category_id', '=', $this->categoryID)->first()->id;
+        endif;
     }
 
+    public function validateStep()
+    {
+        $this->validate();
+        $this->dispatch('step_validated');
+    }
     public function nextStep(): void
     {
-        // $this->validate();
         $data = [
             'category_id' => $this->categoryID,
             'subcategory_id' => $this->subcategoryID,
