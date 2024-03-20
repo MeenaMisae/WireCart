@@ -38,9 +38,7 @@ class AdminCreateProductReviewForm extends Component
         $this->subcategory =  Subcategory::find($this->data['category_id'])->name;
         $this->productName =  $this->data['name'];
         $this->inStock = $this->data['in_stock'];
-        if ($this->inStock === false) :
-            $this->productQuantity =  $this->data['quantity'];
-        endif;
+        $this->productQuantity =  $this->data['quantity'];
     }
 
     #[On('product_images')]
