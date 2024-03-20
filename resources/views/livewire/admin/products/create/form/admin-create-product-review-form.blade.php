@@ -49,7 +49,10 @@
                 </div>
                 <div class="mt-3">
                     @isset($productQuantity)
-                        <span class="badge badge-warning font-semibold">{{ $productQuantity }} {{ $productQuantity > 1 ? 'disponíveis' : 'disponível'}}</span>
+                        @if ($productQuantity <= 5)
+                            <span class="badge badge-warning font-semibold">{{ $productQuantity }}
+                                {{ $productQuantity > 1 ? 'disponíveis' : 'disponível' }}</span>
+                        @endif
                     @endisset
                 </div>
             </div>
