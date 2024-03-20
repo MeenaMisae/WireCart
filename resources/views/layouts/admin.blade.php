@@ -14,7 +14,7 @@
 <body>
     <div class="drawer">
         <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
-        <div class="flex flex-col drawer-content" x-data="{ showNavbar: false }">
+        <div class="flex flex-col drawer-content" x-data="{ showNavbar: true }">
             <div class="w-full navbar" x-show="showNavbar" x-transition.duration.200ms>
                 @include('components.admin.hamburguer-menu')
                 <div class="flex-none hidden lg:block menu-container">
@@ -31,8 +31,3 @@
 </body>
 
 </html>
-{{-- <div class="flex justify-center w-full px-2 mx-2 lg:hidden">
-                        <a href="{{ route('admin.index') }}">
-                            <h1 class="text-3xl font-light tracking-[0.3rem]">wire:cotton</h1>
-                        </a>
-                    </div> --}}
