@@ -1,5 +1,6 @@
 @import url('/node_modules/photoswipe/dist/photoswipe.css');
 @import url('/node_modules/swiper/swiper-bundle.css');
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
 
 @tailwind base;
 @tailwind components;
