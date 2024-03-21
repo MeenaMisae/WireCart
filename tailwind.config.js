@@ -12,7 +12,7 @@ export default {
   theme: {
     extend: {
         fontFamily: {
-            'quick-sand': ['Quicksand', 'sans-serif']
+            'questrial': ['Questrial', 'sans-serif']
         }
     },
   },
